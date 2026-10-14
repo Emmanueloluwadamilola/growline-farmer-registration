@@ -1,0 +1,606 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-14T08:27:57+00:00",
+  "title": "Design System: GrowLine",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "oklch(96.2% 0.013 86.8)",
+        "tonalRamp": [
+          "oklch(15% 0.007 86.8)",
+          "oklch(26% 0.009 86.8)",
+          "oklch(38% 0.011 86.8)",
+          "oklch(50% 0.012 86.8)",
+          "oklch(62% 0.012 86.8)",
+          "oklch(74% 0.010 86.8)",
+          "oklch(85% 0.009 86.8)",
+          "oklch(95% 0.007 86.8)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Clean Sheet",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(38% 0.000 89.9)",
+          "oklch(50% 0.000 89.9)",
+          "oklch(62% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Field Ink",
+        "canonical": "oklch(22.7% 0.029 150.3)",
+        "tonalRamp": [
+          "oklch(15% 0.016 150.3)",
+          "oklch(26% 0.020 150.3)",
+          "oklch(38% 0.024 150.3)",
+          "oklch(50% 0.027 150.3)",
+          "oklch(62% 0.027 150.3)",
+          "oklch(74% 0.023 150.3)",
+          "oklch(85% 0.020 150.3)",
+          "oklch(95% 0.016 150.3)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "oklch(39.5% 0.023 150.0)",
+        "tonalRamp": [
+          "oklch(15% 0.013 150.0)",
+          "oklch(26% 0.016 150.0)",
+          "oklch(38% 0.019 150.0)",
+          "oklch(50% 0.022 150.0)",
+          "oklch(62% 0.021 150.0)",
+          "oklch(74% 0.018 150.0)",
+          "oklch(85% 0.015 150.0)",
+          "oklch(95% 0.013 150.0)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Paper Rule",
+        "canonical": "oklch(86.2% 0.023 87.2)",
+        "tonalRamp": [
+          "oklch(15% 0.013 87.2)",
+          "oklch(26% 0.016 87.2)",
+          "oklch(38% 0.019 87.2)",
+          "oklch(50% 0.022 87.2)",
+          "oklch(62% 0.021 87.2)",
+          "oklch(74% 0.018 87.2)",
+          "oklch(85% 0.015 87.2)",
+          "oklch(95% 0.013 87.2)"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Strong Rule",
+        "canonical": "oklch(55.8% 0.025 130.2)",
+        "tonalRamp": [
+          "oklch(15% 0.014 130.2)",
+          "oklch(26% 0.017 130.2)",
+          "oklch(38% 0.020 130.2)",
+          "oklch(50% 0.024 130.2)",
+          "oklch(62% 0.023 130.2)",
+          "oklch(74% 0.020 130.2)",
+          "oklch(85% 0.017 130.2)",
+          "oklch(95% 0.014 130.2)"
+        ]
+      },
+      "leaf": {
+        "role": "secondary",
+        "displayName": "Deep Leaf",
+        "canonical": "oklch(42.9% 0.096 152.1)",
+        "tonalRamp": [
+          "oklch(15% 0.054 152.1)",
+          "oklch(26% 0.066 152.1)",
+          "oklch(38% 0.078 152.1)",
+          "oklch(50% 0.091 152.1)",
+          "oklch(62% 0.089 152.1)",
+          "oklch(74% 0.076 152.1)",
+          "oklch(85% 0.065 152.1)",
+          "oklch(95% 0.054 152.1)"
+        ]
+      },
+      "leaf-deep": {
+        "role": "secondary",
+        "displayName": "Forest Shade",
+        "canonical": "oklch(31.1% 0.066 153.3)",
+        "tonalRamp": [
+          "oklch(15% 0.037 153.3)",
+          "oklch(26% 0.045 153.3)",
+          "oklch(38% 0.054 153.3)",
+          "oklch(50% 0.062 153.3)",
+          "oklch(62% 0.061 153.3)",
+          "oklch(74% 0.052 153.3)",
+          "oklch(85% 0.044 153.3)",
+          "oklch(95% 0.037 153.3)"
+        ]
+      },
+      "leaf-tint": {
+        "role": "secondary",
+        "displayName": "Leaf Wash",
+        "canonical": "oklch(94.3% 0.021 140.9)",
+        "tonalRamp": [
+          "oklch(15% 0.012 140.9)",
+          "oklch(26% 0.014 140.9)",
+          "oklch(38% 0.017 140.9)",
+          "oklch(50% 0.020 140.9)",
+          "oklch(62% 0.019 140.9)",
+          "oklch(74% 0.017 140.9)",
+          "oklch(85% 0.014 140.9)",
+          "oklch(95% 0.012 140.9)"
+        ]
+      },
+      "night": {
+        "role": "neutral",
+        "displayName": "Night Soil",
+        "canonical": "oklch(19.3% 0.018 155.2)",
+        "tonalRamp": [
+          "oklch(15% 0.010 155.2)",
+          "oklch(26% 0.012 155.2)",
+          "oklch(38% 0.015 155.2)",
+          "oklch(50% 0.017 155.2)",
+          "oklch(62% 0.017 155.2)",
+          "oklch(74% 0.014 155.2)",
+          "oklch(85% 0.012 155.2)",
+          "oklch(95% 0.010 155.2)"
+        ]
+      },
+      "night-soft": {
+        "role": "neutral",
+        "displayName": "Night Mist",
+        "canonical": "oklch(81.2% 0.026 139.8)",
+        "tonalRamp": [
+          "oklch(15% 0.015 139.8)",
+          "oklch(26% 0.018 139.8)",
+          "oklch(38% 0.021 139.8)",
+          "oklch(50% 0.025 139.8)",
+          "oklch(62% 0.024 139.8)",
+          "oklch(74% 0.021 139.8)",
+          "oklch(85% 0.017 139.8)",
+          "oklch(95% 0.015 139.8)"
+        ]
+      },
+      "tomato": {
+        "role": "primary",
+        "displayName": "Tomato Action Red",
+        "canonical": "oklch(53.8% 0.185 31.6)",
+        "tonalRamp": [
+          "oklch(15% 0.104 31.6)",
+          "oklch(26% 0.126 31.6)",
+          "oklch(38% 0.151 31.6)",
+          "oklch(50% 0.175 31.6)",
+          "oklch(62% 0.171 31.6)",
+          "oklch(74% 0.147 31.6)",
+          "oklch(85% 0.124 31.6)",
+          "oklch(95% 0.104 31.6)"
+        ]
+      },
+      "tomato-deep": {
+        "role": "primary",
+        "displayName": "Fired Tomato",
+        "canonical": "oklch(44.5% 0.153 31.5)",
+        "tonalRamp": [
+          "oklch(15% 0.086 31.5)",
+          "oklch(26% 0.105 31.5)",
+          "oklch(38% 0.125 31.5)",
+          "oklch(50% 0.145 31.5)",
+          "oklch(62% 0.141 31.5)",
+          "oklch(74% 0.121 31.5)",
+          "oklch(85% 0.103 31.5)",
+          "oklch(95% 0.086 31.5)"
+        ]
+      },
+      "lime": {
+        "role": "tertiary",
+        "displayName": "Field Lime",
+        "canonical": "oklch(89.9% 0.157 118.8)",
+        "tonalRamp": [
+          "oklch(15% 0.088 118.8)",
+          "oklch(26% 0.107 118.8)",
+          "oklch(38% 0.128 118.8)",
+          "oklch(50% 0.148 118.8)",
+          "oklch(62% 0.145 118.8)",
+          "oklch(74% 0.124 118.8)",
+          "oklch(85% 0.106 118.8)",
+          "oklch(95% 0.088 118.8)"
+        ]
+      },
+      "error": {
+        "role": "status",
+        "displayName": "Alarm Red",
+        "canonical": "oklch(46.6% 0.169 31.0)",
+        "tonalRamp": [
+          "oklch(15% 0.095 31.0)",
+          "oklch(26% 0.116 31.0)",
+          "oklch(38% 0.138 31.0)",
+          "oklch(50% 0.160 31.0)",
+          "oklch(62% 0.156 31.0)",
+          "oklch(74% 0.134 31.0)",
+          "oklch(85% 0.114 31.0)",
+          "oklch(95% 0.095 31.0)"
+        ]
+      },
+      "error-tint": {
+        "role": "status",
+        "displayName": "Alarm Wash",
+        "canonical": "oklch(95.5% 0.019 33.4)",
+        "tonalRamp": [
+          "oklch(15% 0.011 33.4)",
+          "oklch(26% 0.013 33.4)",
+          "oklch(38% 0.015 33.4)",
+          "oklch(50% 0.018 33.4)",
+          "oklch(62% 0.018 33.4)",
+          "oklch(74% 0.015 33.4)",
+          "oklch(85% 0.013 33.4)",
+          "oklch(95% 0.011 33.4)"
+        ]
+      },
+      "sun": {
+        "role": "status",
+        "displayName": "Sun Ring",
+        "canonical": "oklch(81.1% 0.166 85.0)",
+        "tonalRamp": [
+          "oklch(15% 0.094 85.0)",
+          "oklch(26% 0.113 85.0)",
+          "oklch(38% 0.135 85.0)",
+          "oklch(50% 0.157 85.0)",
+          "oklch(62% 0.153 85.0)",
+          "oklch(74% 0.132 85.0)",
+          "oklch(85% 0.112 85.0)",
+          "oklch(95% 0.094 85.0)"
+        ]
+      },
+      "field": {
+        "role": "neutral",
+        "displayName": "Field Fill",
+        "canonical": "oklch(99.1% 0.005 95.1)",
+        "tonalRamp": [
+          "oklch(15% 0.003 95.1)",
+          "oklch(26% 0.004 95.1)",
+          "oklch(38% 0.005 95.1)",
+          "oklch(50% 0.005 95.1)",
+          "oklch(62% 0.005 95.1)",
+          "oklch(74% 0.004 95.1)",
+          "oklch(85% 0.004 95.1)",
+          "oklch(95% 0.003 95.1)"
+        ]
+      },
+      "sand": {
+        "role": "neutral",
+        "displayName": "Farm Sand",
+        "canonical": "oklch(95.5% 0.015 90.2)",
+        "tonalRamp": [
+          "oklch(15% 0.008 90.2)",
+          "oklch(26% 0.010 90.2)",
+          "oklch(38% 0.013 90.2)",
+          "oklch(50% 0.014 90.2)",
+          "oklch(62% 0.014 90.2)",
+          "oklch(74% 0.012 90.2)",
+          "oklch(85% 0.010 90.2)",
+          "oklch(95% 0.008 90.2)"
+        ]
+      },
+      "sand-deep": {
+        "role": "neutral",
+        "displayName": "Picker Track",
+        "canonical": "oklch(92.6% 0.020 87.5)",
+        "tonalRamp": [
+          "oklch(15% 0.011 87.5)",
+          "oklch(26% 0.014 87.5)",
+          "oklch(38% 0.017 87.5)",
+          "oklch(50% 0.018 87.5)",
+          "oklch(62% 0.018 87.5)",
+          "oklch(74% 0.015 87.5)",
+          "oklch(85% 0.014 87.5)",
+          "oklch(95% 0.011 87.5)"
+        ]
+      },
+      "track": {
+        "role": "neutral",
+        "displayName": "Empty Track",
+        "canonical": "oklch(90.8% 0.020 87.5)",
+        "tonalRamp": [
+          "oklch(15% 0.011 87.5)",
+          "oklch(26% 0.014 87.5)",
+          "oklch(38% 0.017 87.5)",
+          "oklch(50% 0.018 87.5)",
+          "oklch(62% 0.018 87.5)",
+          "oklch(74% 0.015 87.5)",
+          "oklch(85% 0.014 87.5)",
+          "oklch(95% 0.011 87.5)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline only, white over the photo gradient, max 11ch."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings; leaf-deep on paper, white on red or night grounds."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Form step titles, farm titles, how-it-works step names, disc numerals."
+      },
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "The single giant lime GrowLine wordmark closing the page footer."
+      },
+      "body-lead": {
+        "displayName": "Body Lead",
+        "purpose": "Hero subhead, lead about paragraph, done message."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default reading text in the system sans; 16px floor for hints."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Form labels and fieldset legends."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "All button labels; 19px on the big location and submit actions."
+      }
+    },
+    "shadows": [
+      {
+        "name": "cta-lift",
+        "value": "0 2px 4px rgba(14,23,17,.18), 0 10px 22px rgba(14,23,17,.16)",
+        "purpose": "The primary tomato pill only."
+      },
+      {
+        "name": "shell-drop",
+        "value": "0 30px 60px rgba(0,0,0,.35)",
+        "purpose": "White form shell lifting off the night panel."
+      },
+      {
+        "name": "node-lift",
+        "value": "0 6px 16px rgba(14,23,17,.2)",
+        "purpose": "White step nodes on the red band."
+      },
+      {
+        "name": "segment-lift",
+        "value": "0 2px 6px rgba(15,58,32,.25)",
+        "purpose": "Selected segment in the unit picker."
+      },
+      {
+        "name": "hairline",
+        "value": "0 1px 2px rgba(14,23,17,.06)",
+        "purpose": "Closed FAQ items on paper."
+      },
+      {
+        "name": "phone-glow",
+        "value": "0 -2px 0 1px #3A4237 inset, 0 -18px 50px rgba(0,0,0,.35)",
+        "purpose": "The SMS phone rising out of the hero frame."
+      },
+      {
+        "name": "field-focus-halo",
+        "value": "0 0 0 4px rgba(27,94,52,.15)",
+        "purpose": "Soft leaf halo on focused inputs and selects."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 3px solid #F2B705; outline-offset: 3px",
+        "purpose": "Sun ring on every focusable element (2px offset on fields and cards)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Shared curve for all state transitions and the signature moment."
+      },
+      {
+        "name": "state-fast",
+        "value": ".12s–.2s",
+        "purpose": "Press scale (.98), button fills, field and card borders."
+      },
+      {
+        "name": "disc-turn",
+        "value": ".25s",
+        "purpose": "Arrow-disc nudge/rotate and FAQ disc rotate."
+      },
+      {
+        "name": "phone-rise",
+        "value": "rise .7s ease-out .2s; translateY(24px)→0 + fade",
+        "purpose": "Signature: plays once on load."
+      },
+      {
+        "name": "typing-hold",
+        "value": "900ms",
+        "purpose": "Typing dots before the bubble appears."
+      },
+      {
+        "name": "bubble-pop",
+        "value": "pop .5s ease-out; scale(.85)→1 + fade",
+        "purpose": "SMS bubble arrival."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition/animation: none",
+        "purpose": "Final state shown; smooth scroll off."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "xs-max",
+        "value": "389px"
+      },
+      {
+        "name": "panel-narrow-max",
+        "value": "520px"
+      },
+      {
+        "name": "choices-2col",
+        "value": "560px"
+      },
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "860px"
+      },
+      {
+        "name": "lg",
+        "value": "900px"
+      },
+      {
+        "name": "container",
+        "value": "1160px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Pill CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single tomato action per view, with the lime arrow disc.",
+      "html": "<button class=\"ds-btn-primary\"><span>Register my farm</span><span class=\"ds-arrow-disc\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></span></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 12px; min-height: 56px; border: 2px solid transparent; border-radius: 999px; font: 700 18px/1.2 var(--font); cursor: pointer; transition: background-color .2s var(--ease-out), transform .12s var(--ease-out); justify-content: space-between; padding: 8px 8px 8px 30px; background: var(--tomato); color: #fff; box-shadow: 0 2px 4px rgba(14,23,17,.18), 0 10px 22px rgba(14,23,17,.16); } .ds-btn-primary:hover { background: var(--tomato-deep); } .ds-btn-primary:active { transform: scale(.98); } .ds-btn-primary:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; } .ds-arrow-disc { flex: 0 0 42px; height: 42px; border-radius: 50%; background: var(--lime); color: var(--night); display: grid; place-items: center; transition: transform .25s var(--ease-out); } .ds-btn-primary:hover .ds-arrow-disc { transform: translateX(3px) rotate(-45deg); }"
+    },
+    {
+      "name": "Location Button",
+      "kind": "button",
+      "refersTo": "button-leaf",
+      "description": "Leaf action with a lime pin tile, used to mark the farm location.",
+      "html": "<button class=\"ds-btn-leaf\"><span class=\"ds-pin-disc\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/></svg></span><span>Mark my farm location</span></button>",
+      "css": ".ds-btn-leaf { display: inline-flex; align-items: center; gap: 12px; width: 100%; min-height: 64px; padding: 8px 22px 8px 10px; border: 0; border-radius: 18px; background: var(--leaf); color: #fff; font: 700 19px/1.2 var(--font); text-align: left; cursor: pointer; transition: background-color .2s var(--ease-out), transform .12s var(--ease-out); } .ds-btn-leaf:hover { background: var(--leaf-deep); } .ds-btn-leaf:active { transform: scale(.98); } .ds-btn-leaf:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; } .ds-pin-disc { flex: 0 0 46px; height: 46px; border-radius: 12px; background: var(--lime); color: var(--leaf-deep); display: grid; place-items: center; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary leaf-outlined pill, e.g. adding another farm.",
+      "html": "<button class=\"ds-btn-outline\">Add another farm</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; gap: 12px; min-height: 56px; border: 2px solid transparent; border-radius: 999px; font: 700 18px/1.2 var(--font); cursor: pointer; transition: background-color .2s var(--ease-out), transform .12s var(--ease-out); justify-content: center; padding: 8px 22px; background: var(--surface); color: var(--leaf); border-color: var(--leaf); } .ds-btn-outline:hover { background: var(--leaf-tint); } .ds-btn-outline:active { transform: scale(.98); } .ds-btn-outline:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "58px field with a 2px stroke, leaf focus halo and sun keyboard ring.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-label\">Phone number</span><span class=\"ds-hint\">The number that will get the text messages</span><input class=\"ds-input\" type=\"tel\" placeholder=\"0803 123 4567\"></label>",
+      "css": ".ds-field { display: block; font-family: var(--font); color: var(--ink); } .ds-label { display: block; font-size: 19px; font-weight: 700; } .ds-hint { display: block; margin-top: 4px; font-size: 16px; color: var(--ink-soft); } .ds-input { display: block; width: 100%; min-height: 58px; margin-top: 10px; padding: 12px 16px; border: 2px solid var(--line-strong); border-radius: 14px; background: var(--field); color: var(--ink); font: 18px/1.3 var(--font); transition: border-color .15s, box-shadow .15s; } .ds-input::placeholder { color: #626A5D; } .ds-input:focus { border-color: var(--leaf); background: #fff; box-shadow: 0 0 0 4px rgba(27,94,52,.15); outline: none; } .ds-input:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }"
+    },
+    {
+      "name": "Choice Card",
+      "kind": "custom",
+      "refersTo": "choice-card",
+      "description": "Radio card with icon tile and tick; leaf-tint with lime tile when checked.",
+      "html": "<label class=\"ds-choice\"><input type=\"radio\" name=\"ds-c\" checked><span class=\"ds-choice-body\"><span class=\"ds-ico\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/></svg></span>I am at my farm now<span class=\"ds-tick\"></span></span></label>",
+      "css": ".ds-choice { position: relative; display: block; cursor: pointer; font-family: var(--font); color: var(--ink); } .ds-choice input { position: absolute; opacity: 0; width: 1px; height: 1px; } .ds-choice-body { display: flex; align-items: center; gap: 14px; min-height: 76px; padding: 12px 14px; border: 2px solid var(--line-strong); border-radius: 16px; background: var(--field); font-size: 18px; font-weight: 650; line-height: 1.3; transition: border-color .15s, background-color .15s, transform .12s var(--ease-out); } .ds-choice:hover .ds-choice-body { border-color: var(--leaf); } .ds-choice:active .ds-choice-body { transform: scale(.985); } .ds-ico { flex: 0 0 48px; height: 48px; border-radius: 12px; background: var(--leaf-tint); color: var(--leaf); display: grid; place-items: center; } .ds-tick { margin-left: auto; flex: 0 0 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line-strong); display: grid; place-items: center; } .ds-choice input:checked + .ds-choice-body { border-color: var(--leaf); background: var(--leaf-tint); box-shadow: inset 0 0 0 1px var(--leaf); } .ds-choice input:checked + .ds-choice-body .ds-ico { background: var(--lime); } .ds-choice input:checked + .ds-choice-body .ds-tick { background: var(--leaf); border-color: var(--leaf); } .ds-choice input:checked + .ds-choice-body .ds-tick::after { content: ''; width: 11px; height: 6px; border: solid #fff; border-width: 0 0 3px 3px; transform: translate(0,-1px) rotate(-45deg); } .ds-choice input:focus-visible + .ds-choice-body { outline: 3px solid var(--sun); outline-offset: 2px; }"
+    },
+    {
+      "name": "Segmented Picker",
+      "kind": "chip",
+      "refersTo": "",
+      "description": "Three-way unit picker on a warm track; selected segment is solid leaf.",
+      "html": "<div class=\"ds-seg\"><label><input type=\"radio\" name=\"ds-u\" checked><span>Plots</span></label><label><input type=\"radio\" name=\"ds-u\"><span>Acres</span></label><label><input type=\"radio\" name=\"ds-u\"><span>Hectares</span></label></div>",
+      "css": ".ds-seg { display: grid; grid-template-columns: repeat(3,1fr); gap: 4px; padding: 4px; border-radius: 16px; background: var(--sand-deep); font-family: var(--font); } .ds-seg label { position: relative; display: block; cursor: pointer; } .ds-seg input { position: absolute; opacity: 0; width: 1px; height: 1px; } .ds-seg span { display: grid; place-items: center; min-height: 52px; padding: 6px; border-radius: 12px; font-weight: 700; font-size: 17px; color: var(--leaf-deep); transition: background-color .15s, color .15s; } .ds-seg label:hover span { background: rgba(27,94,52,.08); } .ds-seg input:checked + span { background: var(--leaf); color: #fff; box-shadow: 0 2px 6px rgba(15,58,32,.25); } .ds-seg input:focus-visible + span { outline: 3px solid var(--sun); outline-offset: 1px; }"
+    },
+    {
+      "name": "Hero Nav Pill",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "White brand on the hero frame and a white pill link that turns lime on hover.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-brand\" href=\"#\"><span class=\"ds-mark\"></span>GrowLine</a><a class=\"ds-nav-link\" href=\"#\">Register my farm</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 14px 14px 18px; border-radius: 28px; background: var(--night); } .ds-brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font: 750 22px/1 var(--display); letter-spacing: -0.02em; } .ds-mark { width: 36px; height: 36px; border-radius: 50%; background: var(--lime); } .ds-nav-link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; background: #fff; color: var(--night); font: 700 16px/1 var(--font); text-decoration: none; white-space: nowrap; transition: background-color .2s var(--ease-out); } .ds-nav-link:hover { background: var(--lime); } .ds-brand:focus-visible, .ds-nav-link:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; }"
+    },
+    {
+      "name": "FAQ Item",
+      "kind": "card",
+      "refersTo": "faq-item",
+      "description": "White accordion item that flips to leaf when open; plus disc rotates to a lime close mark.",
+      "html": "<details class=\"ds-faq\"><summary>Do I need a smartphone?<span class=\"ds-faq-disc\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.8\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></span></summary><p>No. The advice comes as a plain text message.</p></details>",
+      "css": ".ds-faq { border-radius: 18px; background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(14,23,17,.06); font-family: var(--font); } .ds-faq summary { display: flex; justify-content: space-between; align-items: center; gap: 14px; min-height: 64px; padding: 14px 14px 14px 20px; font-weight: 700; font-size: 18px; cursor: pointer; list-style: none; border-radius: 18px; } .ds-faq summary::-webkit-details-marker { display: none; } .ds-faq summary:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; } .ds-faq-disc { flex: 0 0 36px; height: 36px; border-radius: 50%; background: var(--leaf-tint); color: var(--leaf); display: grid; place-items: center; transition: transform .25s var(--ease-out); } .ds-faq summary:hover .ds-faq-disc { background: var(--lime); color: var(--leaf-deep); } .ds-faq[open] { background: var(--leaf); color: #fff; } .ds-faq[open] .ds-faq-disc { transform: rotate(45deg); background: var(--lime); color: var(--leaf-deep); } .ds-faq p { margin: 0; padding: 0 20px 20px; font-size: 17px; } .ds-faq[open] p { color: #E4EFE0; }"
+    },
+    {
+      "name": "Action Band",
+      "kind": "card",
+      "refersTo": "band-action",
+      "description": "Inset tomato frame holding the 3-step path with white nodes and lime number badges.",
+      "html": "<section class=\"ds-band\"><h2>How it works</h2><div class=\"ds-node\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/></svg><b>1</b></div></section>",
+      "css": ".ds-band { border-radius: 28px; background: var(--tomato); color: #fff; padding: 56px 24px 48px; } .ds-band h2 { margin: 0 0 28px; font: 750 clamp(32px, 8vw, 60px)/1.1 var(--display); letter-spacing: -0.03em; } .ds-node { position: relative; width: 64px; height: 64px; border-radius: 50%; background: #fff; color: var(--tomato); display: grid; place-items: center; box-shadow: 0 6px 16px rgba(14,23,17,.2); } .ds-node b { position: absolute; top: -6px; right: -8px; width: 28px; height: 28px; border-radius: 50%; background: var(--lime); color: var(--night); font: 800 15px/28px var(--display); text-align: center; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Message in the Field",
+    "overview": "GrowLine looks like an SMS arriving while you stand in your crop. Rounded photo frames sit inset on warm paper. The page moves through solid grounds in a fixed order: paper, then a tomato-red band, then a near-black night panel holding a white form, then a night footer with a giant lime wordmark. Each ground is a full rounded block inset 10px from the viewport edge. Nothing runs edge to edge. This blends two reference sites the user chose: the AgriSync layout language (inset photo hero, huge type, dark panel, giant wordmark footer) and the Tomato site's bold red bands.\n\nThe page has to work for an older farmer on a low-end Android phone, outdoors in bright sun, on slow 3G. That makes it dense in contrast but generous in size. Type is large, targets are tall, and every reading surface clears WCAG AA by a wide margin. The only expressive typeface is the display face. Body and form text use the system sans, so the page reads fully even if no web font, photo or map loads. Every photo sits on a solid colour.\n\nMotion is a single, small event. On load the phone rises 24px and fades in, typing dots show for 900ms, then the message bubble pops in. Everything else is quick state feedback on a shared ease-out curve. Reduced motion shows the final state.",
+    "keyCharacteristics": [
+      "Inset rounded blocks (28px) on a warm paper ground (#F6F2E9). The cream ground is user-pinned, not a default.",
+      "Ground switches, not shadows, carry the page's structure: paper, red band, night panel, white form.",
+      "Tomato red is the single action colour. Leaf green is the brand and the \"done/selected\" colour.",
+      "Lime is a highlight fill that always carries dark text.",
+      "Pill CTAs with a lime arrow disc. Big, plain, sunlight-legible type."
+    ],
+    "rules": [
+      {
+        "name": "The One Action Colour Rule",
+        "body": "Tomato means \"do this\". It goes on the CTA, the how-it-works band and nowhere decorative. Errors use the distinct, deeper `error` red with a tint and an icon, so an error never reads as a button.",
+        "section": "colors"
+      },
+      {
+        "name": "The Lime Carries Dark Ink Rule",
+        "body": "Lime is a fill under `night` or `leaf-deep` text, or a text colour only on `night` or `leaf` grounds. Never put lime text on paper or white, and never put white text on lime.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sun Ring Rule",
+        "body": "Every focusable element gets the same 3px `sun` outline with a 3px offset (2px on fields and cards). It stays visible on paper, red, night, leaf and white grounds alike.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Bricolage Grotesque is only for headings, the brand, the wordmark and numerals in discs. Everything a farmer reads or types uses the system sans. The page must stay fully usable with the display font blocked.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sunlight Floor Rule",
+        "body": "Text never goes below 16px, form labels stay at 19px, and every control is at least 52px tall (inputs 58px, buttons 56–64px, choice cards 76px).",
+        "section": "typography"
+      },
+      {
+        "name": "The Grounds Not Shadows Rule",
+        "body": "To separate a section, change its ground. Add a shadow only when an object sits on top of another surface: a button, the form shell, a node or a selected segment.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Inset Frame Rule",
+        "body": "A major block is a rounded 28px frame inset 10px from the screen edge. If a new section needs its own ground, it becomes another inset frame, not a full-bleed stripe.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do set every major section as an inset 28px frame on `paper`, and change the ground (red, night, white) to start a new chapter.",
+      "Do keep tomato for the single primary action per view, and pair it with the lime arrow disc.",
+      "Do put dark text (`night` or `leaf-deep`) on every lime fill.",
+      "Do keep body at 17px or more, labels at 19px and controls at 52px or taller, so the page reads outdoors in sun.",
+      "Do use drawn inline SVG icons inside tinted or lime discs and tiles. Status messages always pair the icon with bold text.",
+      "Do give every focusable element the 3px `sun` ring.",
+      "Do run motion on the shared ease-out curve, cubic-bezier(.16, 1, .3, 1), and collapse it to the final state under reduced motion."
+    ],
+    "donts": [
+      "Don't use tomato for errors or decoration. Errors use `error` with a tint and an icon.",
+      "Don't set lime text on paper or white, or white text on lime.",
+      "Don't use emoji or typed glyphs as icons. Icons are drawn SVG.",
+      "Don't add eyebrow or kicker labels above headings. Step context lives in the sticky progress header and the screen-reader legend.",
+      "Don't make anything essential depend on Bricolage Grotesque, a photo or the map loading. Every photo sits on a solid colour.",
+      "Don't run blocks full-bleed or use shadows to separate sections."
+    ]
+  }
+}

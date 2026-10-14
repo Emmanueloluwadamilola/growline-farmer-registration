@@ -1,0 +1,5 @@
+# Design reference screenshots of third-party websites: not ours to redistribute
+*.webp
+# Local design-tool cache
+.impeccable/hook.cache.json
+.DS_Store

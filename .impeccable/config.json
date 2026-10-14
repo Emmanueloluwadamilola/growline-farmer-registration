@@ -1,0 +1,35 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-14T08:55:23.063Z",
+        "reason": "User's original brief asked for a 'warm off-white background'; recorded as user-pinned in PRODUCT.md/DESIGN.md (paper #F6F2E9); finish reviewer agreed"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-14T08:55:23.091Z",
+        "reason": "Intentional: the .phone rises out of the hero frame's bottom edge (direction contract THESIS); finish reviewer agreed"
+      },
+      {
+        "rule": "pulsing-dot",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-14T08:55:23.122Z",
+        "reason": "Domain-appropriate motion: .typing is an SMS typing indicator shown ~900ms once before the message, hidden after and under reduced motion; finish reviewer agreed"
+      }
+    ]
+  }
+}
