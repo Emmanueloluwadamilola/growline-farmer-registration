@@ -7,10 +7,10 @@
   Opened from file://, those files can't load, so the farmer picks State and LGA by hand.
 
   WHAT TO CONFIGURE (all at the top of the <script> block):
-    1. API_ENDPOINT  – the Google Apps Script web app URL (ends in /exec) that
-                       saves registrations to the Google Sheet. Setup steps:
-                       google-apps-script/SETUP.md. Leave it as "" to run in
-                       DEMO MODE (nothing is saved; payload goes to the console).
+    1. API_ENDPOINT  – the GrowLine API's register URL. Registrations are
+                       POSTed there as JSON (see DATA_SCHEMA.md). Leave it as
+                       "" to run in DEMO MODE (nothing is saved; payload goes
+                       to the console).
     2. CONTACT_TEXT / CONTACT_HREF – replaces the "[contact]" placeholder in
                        the FAQ (e.g. a phone number and "tel:+234...").
     3. PLOT_M2       – how big one "plot" is. Defined ONCE (50 ft × 100 ft =
@@ -379,6 +379,11 @@
   .submit-area { margin-top: 24px; }
   .submit-area .btn { width: 100%; min-height: 64px; font-size: 19px; }
   .submit-error { margin-top: 12px; }
+  .form-summary { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin-bottom: 14px; padding: 12px 16px; border-radius: var(--r-card); background: var(--error-tint); color: var(--error); font-weight: 700; font-size: 17px; }
+  .form-summary .link-btn { min-height: 44px; color: var(--error); text-decoration: underline; }
+  .btn .spinner { flex: 0 0 22px; width: 22px; height: 22px; border-color: rgba(255,255,255,.35); border-top-color: #fff; }
+  .btn:disabled[aria-busy="true"] { opacity: 1; }
+  form.is-saving .step > :not(.submit-area) { opacity: .6; transition: opacity .2s var(--ease-out); }
 
   .done { max-width: 720px; margin: 28px auto 0; padding: 40px 24px; text-align: center; background: var(--leaf); color: #fff; border-radius: 24px; }
   .done h2 { margin-top: 18px; font-size: clamp(30px, 7vw, 44px); }
@@ -625,8 +630,13 @@
                 <p class="error" id="consent-err"></p>
               </div>
               <div class="submit-area">
-                <button type="submit" class="btn btn-primary" id="submit-btn" aria-disabled="true">Register me for GrowLine</button>
+                <div class="form-summary" id="form-summary" hidden>
+                  <span id="form-summary-text"></span>
+                  <button type="button" class="link-btn" id="form-summary-btn">Show me</button>
+                </div>
+                <button type="submit" class="btn btn-primary" id="submit-btn" aria-disabled="true"><span class="btn-label">Register me for GrowLine</span></button>
                 <p class="error submit-error" id="submit-err" role="alert"></p>
+                <p class="sr-only" id="submit-status" role="status" aria-live="polite"></p>
               </div>
             </fieldset>
           </form>
@@ -638,7 +648,8 @@
             <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
           </div>
           <h2 id="done-h" tabindex="-1">You are registered. Welcome to GrowLine.</h2>
-          <p>Thank you, <strong id="done-name"></strong>. We have saved your farm. Your first spray advice will arrive by SMS to <strong id="done-phone"></strong>. If you don't get a message in a few days, contact your Extension Agent.</p>
+          <p>Thank you, <strong id="done-name"></strong>. <span id="done-saved">We have saved your farm.</span> Your first spray advice will arrive by SMS to <strong id="done-phone"></strong>. If you don't get a message in a few days, contact your Extension Agent.</p>
+          <p id="done-code-line" hidden>Your GrowLine code: <strong id="done-code"></strong>. Keep it safe, you may be asked for it.</p>
           <div class="done-next">
             <p class="done-next-q">Do you have another farm?</p>
             <button type="button" class="btn btn-lime" id="another-btn">Register another farm</button>
@@ -754,7 +765,7 @@
 
   /* =================== CONFIG =================== */
   // Where registrations are POSTed as JSON. "" = DEMO MODE (simulated success).
-  var API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbx5lShz_Y2wIKvM6hzgXsSZo7wVtzF9hjtHISZ2P46lKF6C1mu_feo8Uy24i6JRAukW/exec'; // Google Apps Script web app (google-apps-script/)
+  var API_ENDPOINT = 'https://glowlineapi.up.railway.app/farm/register-form/'; // GrowLine API
   // Replaces "[contact]" in the FAQ. Leave '' to keep the visible placeholder.
   var CONTACT_TEXT = ''; // TODO: e.g. '0803 000 0000'
   var CONTACT_HREF = ''; // TODO: e.g. 'tel:+2348030000000'
@@ -775,6 +786,10 @@
   /* ============================================== */
 
   var COPY = {
+    done: {
+      saved: 'We have saved your farm.',
+      duplicate: 'This farm was already registered, so we kept the one we have.'
+    },
     loading: 'Finding your farm… please stay where you are.',
     success: 'Done! Your farm location has been saved.',
     denied: "We could not get your location. Please tap Allow when your phone asks. If you already tapped Don't Allow, open your phone Settings, find your browser, and switch Location on. Then try again.",
@@ -787,15 +802,35 @@
     areaManual: 'Please choose the State and Local Government Area of this farm.',
     err: {
       name: 'Please write your name.',
-      phone: 'Please check your phone number. It should look like 08031234567.',
+      nameShort: 'Your name looks too short. Please write your full name.',
+      nameChars: 'Please use only letters in your name, no numbers or symbols.',
+      nameLong: 'Your name is too long. Please keep it under 100 letters.',
+      phone: 'Please write your phone number. Example: 08031234567',
+      phoneLetters: 'Your phone number should only have numbers. Example: 08031234567',
+      phoneLength: 'Your phone number should have 11 numbers. Example: 08031234567',
+      phonePrefix: 'This does not look like a Nigerian mobile number. It should start with 070, 080, 081, 090 or 091.',
       area: 'Please choose the State and Local Government Area of this farm.',
       areaWait: 'Please wait a moment. We are still finding your Local Government Area.',
       town: 'Please write your town or village.',
+      townShort: 'The name of your town or village looks too short.',
+      townLetters: 'Please write the name of your town or village in letters.',
+      townLong: 'The name of your town or village is too long. Please keep it under 100 letters.',
       stage: 'Please choose what your tomato crop is doing now.',
       loc: 'Please tap the green button to mark this farm.',
       size: 'Please give your best guess of the farm size, as a number. Example: 2',
+      sizeZero: 'The farm size must be more than 0.',
+      sizeBig: 'That farm size is too big. Please check the number, and check you picked the right unit.',
       consent: 'Please tick the box to agree, so we can send you advice.',
-      submit: 'We could not save your details. Please check your internet and tap the button again.'
+      submit: 'We could not save your details. Please check your internet and tap the button again.',
+      offline: 'You are offline. Please connect to the internet, then tap the button again. Your answers are kept.',
+      timeout: 'Saving took too long because the network is slow. Please tap the button again.',
+      server: 'Some details need fixing. Please check the messages above.',
+      summary: function (n) { return n === 1 ? 'Please fix 1 thing above.' : 'Please fix ' + n + ' things above.'; }
+    },
+    saving: {
+      label: 'Saving your details…',
+      slow: 'Still saving. Your network is slow…',
+      idle: 'Register me for GrowLine'
     }
   };
   var ICONS = {
@@ -851,6 +886,50 @@
     return isFinite(n) && n > 0 && n <= 100000 ? n : null;
   }
 
+  /* ---------- Field rules ----------
+     Each returns null when the value is fine, or the COPY.err key to show.
+     Letters include accented and dotted Yoruba/Igbo/Hausa letters (ẹ, ọ, ṣ, ƙ…)
+     and combining tone marks, written out so old phone browsers can parse them. */
+  var LETTER = 'A-Za-z\u00C0-\u024F\u1E00-\u1EFF';
+  var MARK = '\u0300-\u036F';
+  var NAME_RE = new RegExp('^[' + LETTER + '][' + LETTER + MARK + " .'\u2019-]*$");
+  var LETTERS_G = new RegExp('[' + LETTER + ']', 'g');
+  var HAS_LETTER = new RegExp('[' + LETTER + ']');
+  function tidy(raw) { return String(raw || '').trim().replace(/\s+/g, ' '); }
+  function nameProblem(raw) {
+    var v = tidy(raw);
+    if (!v) return 'name';
+    if (!NAME_RE.test(v)) return 'nameChars';
+    if ((v.match(LETTERS_G) || []).length < 2) return 'nameShort';
+    if (v.length > 100) return 'nameLong';
+    return null;
+  }
+  function phoneProblem(raw) {
+    var d = String(raw || '').replace(/[\s\-().]/g, '');
+    if (!d) return 'phone';
+    if (/[^\d+]/.test(d) || /.\+/.test(d)) return 'phoneLetters';
+    var national = /^\+?234/.test(d) ? d.replace(/^\+?234/, '').replace(/^0/, '') : d.replace(/^0/, '');
+    if (national.length !== 10) return 'phoneLength';
+    return normalisePhone(d) ? null : 'phonePrefix';
+  }
+  function townProblem(raw) {
+    var v = tidy(raw);
+    if (!v) return 'town';
+    if (!HAS_LETTER.test(v)) return 'townLetters';
+    if (v.length < 2) return 'townShort';
+    if (v.length > 100) return 'townLong';
+    return null;
+  }
+  function sizeProblem(raw) {
+    var t = String(raw || '').trim();
+    if (!t) return 'size';
+    var n = parseFloat(t.replace(',', '.'));
+    if (!isFinite(n)) return 'size';
+    if (n <= 0) return 'sizeZero';
+    if (n > 100000) return 'sizeBig';
+    return null;
+  }
+
   // Estimated footprint: a circle with the same area as the size given.
   function estimateFootprint(value, unit) {
     var area = value * UNIT_M2[unit];
@@ -880,10 +959,19 @@
     return ring;
   }
 
+  function checkSize(f, show) {
+    var field = f.el.querySelector('.size-field'), input = f.el.querySelector('.size-input');
+    var problem = input.validity && input.validity.badInput ? 'size' : sizeProblem(input.value);
+    if (!problem) setError(field, f.el.querySelector('.size-err'), '', [input]);
+    else if (show || field.classList.contains('has-error')) setError(field, f.el.querySelector('.size-err'), COPY.err[problem], [input]);
+    return !problem;
+  }
+
   function setError(wrap, errEl, msg, inputs) {
     wrap.classList.toggle('has-error', !!msg);
     errEl.textContent = msg || '';
     (inputs || []).forEach(function (i) { if (msg) i.setAttribute('aria-invalid', 'true'); else i.removeAttribute('aria-invalid'); });
+    refreshSummary();
   }
 
   /* ---------- State + LGA from coordinates ---------- */
@@ -1029,10 +1117,12 @@
     });
     sizeInput.addEventListener('input', function () {
       f.sizeValue = sizeInput.value;
-      if (parseSize(f.sizeValue)) setError(q('.size-field'), q('.size-err'), '', [sizeInput]);
+      checkSize(f, false);
       drawFootprint(f);
       save();
     });
+    // type=number reads '' for text like "2abc", so check the box's own validity too.
+    sizeInput.addEventListener('blur', function () { if (sizeInput.value || sizeInput.validity.badInput) checkSize(f, true); });
 
     q('.loc-err').id = p + 'loc-err';
     q('.mark-btn').setAttribute('aria-describedby', p + 'title ' + p + 'loc-err');
@@ -1351,23 +1441,40 @@
   /* ---------- Field validation ---------- */
   var fields = {
     name: { wrap: $('#f-name'), input: $('#full_name'), err: $('#full_name-err'),
-      ok: function () { return $('#full_name').value.trim().length >= 2; } },
+      problem: function () { return nameProblem($('#full_name').value); } },
     phone: { wrap: $('#f-phone'), input: $('#phone'), err: $('#phone-err'),
-      ok: function () { return !!normalisePhone($('#phone').value); } },
+      problem: function () { return phoneProblem($('#phone').value); } },
     town: { wrap: $('#f-town'), input: $('#town'), err: $('#town-err'),
-      ok: function () { return $('#town').value.trim().length >= 2; } },
+      problem: function () { return townProblem($('#town').value); } },
     stage: { wrap: $('#f-stage'), input: form.querySelector('input[name="crop_stage"]'), err: $('#stage-err'),
-      ok: function () { return !!form.querySelector('input[name="crop_stage"]:checked'); } },
+      problem: function () { return form.querySelector('input[name="crop_stage"]:checked') ? null : 'stage'; } },
     consent: { wrap: $('#f-consent'), input: $('#consent'), err: $('#consent-err'),
-      ok: function () { return $('#consent').checked; } }
+      problem: function () { return $('#consent').checked ? null : 'consent'; } }
   };
 
+  // show=false only clears a fixed error; it never adds one while they type.
   function checkField(key, show) {
-    var fd = fields[key], ok = fd.ok();
-    if (ok) setError(fd.wrap, fd.err, '', [fd.input]);
-    else if (show) setError(fd.wrap, fd.err, COPY.err[key], [fd.input]);
-    return ok;
+    var fd = fields[key], problem = fd.problem();
+    if (!problem) setError(fd.wrap, fd.err, '', [fd.input]);
+    else if (show || fd.wrap.classList.contains('has-error')) setError(fd.wrap, fd.err, COPY.err[problem], [fd.input]);
+    return !problem;
   }
+
+  // "Please fix N things above": shown after a failed submit, counts down as they fix things.
+  function refreshSummary(force) {
+    var box = $('#form-summary');
+    if (box.hidden && !force) return;
+    var n = form.querySelectorAll('.has-error').length;
+    box.hidden = n === 0;
+    if (n) $('#form-summary-text').textContent = COPY.err.summary(n);
+  }
+  $('#form-summary-btn').addEventListener('click', function () {
+    var first = form.querySelector('.has-error');
+    if (!first) return;
+    var target = first.querySelector('[aria-invalid="true"], input, select, button') || first;
+    scrollToEl(first);
+    target.focus({ preventScroll: true });
+  });
 
   Object.keys(fields).forEach(function (key) {
     var fd = fields[key];
@@ -1377,8 +1484,10 @@
       el.addEventListener('change', function () { checkField(key, false); save(); });
     });
   });
-  // Phone: tell them gently once they leave the box, not while typing.
-  $('#phone').addEventListener('blur', function () { if ($('#phone').value.trim()) checkField('phone', true); });
+  // Typed fields: tell them gently once they leave the box, not while typing.
+  ['name', 'phone', 'town'].forEach(function (key) {
+    fields[key].input.addEventListener('blur', function () { if (fields[key].input.value.trim()) checkField(key, true); });
+  });
   $('#consent').addEventListener('change', function () {
     submitBtn.setAttribute('aria-disabled', String(!$('#consent').checked));
   });
@@ -1400,13 +1509,14 @@
         invalid.push(finding ? q('.area-msg') : (f.state ? q('.area-lga') : q('.area-state')));
         if (!finding && f.areaStatus === 'found') { f.areaOpen = true; renderArea(f); }
       }
+      // Clear anything left from an earlier try (including a message from the API).
+      if (f.lat != null || f.agentHelp) setError(q('.loc-area'), q('.loc-err'), '');
+      if (f.state && f.lga) setError(q('.area'), q('.area-err'), '');
       var sizeIn = q('.size-input');
-      if (!parseSize(sizeIn.value)) {
-        setError(q('.size-field'), q('.size-err'), COPY.err.size, [sizeIn]);
-        invalid.push(sizeIn);
-      } else setError(q('.size-field'), q('.size-err'), '', [sizeIn]);
+      if (!checkSize(f, true)) invalid.push(sizeIn);
     });
     if (!checkField('consent', true)) invalid.push(fields.consent.input);
+    refreshSummary(true);
     return invalid;
   }
 
@@ -1428,18 +1538,11 @@
       submitted_at: new Date().toISOString(),
       hp: $('#gl_hp_note').value,  // spam trap; real farmers leave it empty
       farms: farms.map(function (f) {
+        // The API only takes the footprint; it is null when the farm has no GPS point.
         var size = parseSize(f.el.querySelector('.size-input').value);
         var fp = estimateFootprint(size, f.sizeUnit);
         var hasPoint = f.lat != null && f.lng != null;
         return {
-          lat: f.lat == null ? null : round(f.lat, 6),
-          lng: f.lng == null ? null : round(f.lng, 6),
-          gps_accuracy_m: f.acc == null ? null : round(f.acc, 1),
-          size_value: size,
-          size_unit: f.sizeUnit,
-          estimated_area_m2: fp.estimated_area_m2,
-          estimated_radius_m: fp.estimated_radius_m,
-          estimated_perimeter_m: fp.estimated_perimeter_m,
           estimated_footprint: hasPoint
             ? { type: 'Polygon', coordinates: [footprintRing(f.lat, f.lng, fp.estimated_radius_m)] }
             : null
@@ -1449,28 +1552,40 @@
   }
 
   // All network logic lives here. Swap API_ENDPOINT for the real URL.
+  // Rejects with err.kind: 'offline' | 'timeout' | 'fields' (err.fields = API field errors) | 'failed'.
+  function submitError(kind, fields) { var e = new Error(kind); e.kind = kind; e.fields = fields || null; return e; }
   function submitRegistration(payload) {
+    if (navigator.onLine === false) return Promise.reject(submitError('offline'));
     if (!API_ENDPOINT) {
       console.info('[GrowLine DEMO MODE] Would POST this registration:', payload);
-      return new Promise(function (resolve) { setTimeout(function () { resolve({ ok: true, demo: true }); }, 1200); });
+      return new Promise(function (resolve) { setTimeout(function () { resolve({ id: 'demo', code: 'FMR-DEMO', farms_added: 1, farms_skipped_as_duplicates: 0, demo: true }); }, 1200); });
     }
     var ctrl = window.AbortController ? new AbortController() : null;
     var t = ctrl ? setTimeout(function () { ctrl.abort(); }, 30000) : null;
-    // JSON sent as text/plain: Google Apps Script can't answer a CORS preflight,
-    // and a text/plain POST doesn't trigger one. The script parses the body itself.
+    // The API answers the CORS preflight for this page's origin.
     return fetch(API_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(payload),
       redirect: 'follow',
       signal: ctrl ? ctrl.signal : undefined
     }).then(function (res) {
       clearTimeout(t);
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.json();
-    }, function (e) { clearTimeout(t); throw e; }).then(function (data) {
-      // Apps Script always answers 200, so the result is in the body.
-      if (!data || data.ok !== true) throw new Error((data && data.error) || 'rejected');
+      if (res.ok) return res.json();
+      // 400 = the API rejected some fields (DRF style: { "phone_e164": ["…"] }).
+      if (res.status === 400) {
+        return res.json().catch(function () { return null; }).then(function (body) {
+          throw submitError(body && typeof body === 'object' ? 'fields' : 'failed', body);
+        });
+      }
+      throw submitError('failed');
+    }, function (e) {
+      clearTimeout(t);
+      if (e && e.name === 'AbortError') throw submitError('timeout');
+      throw submitError(navigator.onLine === false ? 'offline' : 'failed');
+    }).then(function (data) {
+      // A saved registration always comes back with its id.
+      if (!data || !data.id) throw submitError('failed');
       return data;
     });
   }
@@ -1487,32 +1602,81 @@
       return;
     }
     var payload = buildPayload();
-    submitting = true;
-    submitBtn.disabled = true;
-    submitBtn.setAttribute('aria-busy', 'true');
-    submitBtn.textContent = 'Saving…';
+    setSaving(true);
 
-    submitRegistration(payload).then(function () {
+    submitRegistration(payload).then(function (res) {
       farms.forEach(stopWatch);
       clearSaved();
+      var duplicate = res.farms_added === 0 && res.farms_skipped_as_duplicates > 0;
+      $('#done-saved').textContent = duplicate ? COPY.done.duplicate : COPY.done.saved;
+      $('#done-code').textContent = res.code || '';
+      $('#done-code-line').hidden = !res.code;
       $('#done-name').textContent = payload.full_name.split(' ')[0];
       $('#done-phone').textContent = localPhone(payload.phone_e164);
       $('#form-shell').hidden = true;
       $('#done').hidden = false;
       scrollToEl($('#done'));
       $('#done-h').focus({ preventScroll: true });
-    }).catch(function () {
+    }).catch(function (err) {
       resetSubmit();
-      $('#submit-err').textContent = COPY.err.submit;
+      var kind = err && err.kind;
+      if (kind === 'fields' && showServerErrors(err.fields)) {
+        $('#submit-err').textContent = COPY.err.server;
+        refreshSummary(true);
+        return;
+      }
+      $('#submit-err').textContent = kind === 'offline' ? COPY.err.offline : kind === 'timeout' ? COPY.err.timeout : COPY.err.submit;
     });
   });
 
-  function resetSubmit() {
-    submitting = false;
-    submitBtn.disabled = false;
-    submitBtn.removeAttribute('aria-busy');
-    submitBtn.textContent = 'Register me for GrowLine';
+  // Puts the API's own messages under the matching boxes. Returns false if none matched.
+  function showServerErrors(body) {
+    if (!body) return false;
+    var first = function (v) { return Array.isArray(v) ? first(v[0]) : v && typeof v === 'object' ? first(v[Object.keys(v)[0]]) : v ? String(v) : ''; };
+    var map = { full_name: 'name', phone_e164: 'phone', town_or_village: 'town', crop_stage: 'stage', consent: 'consent' };
+    var shown = [];
+    Object.keys(body).forEach(function (k) {
+      var msg = first(body[k]);
+      if (!msg) return;
+      if (map[k]) {
+        var fd = fields[map[k]];
+        setError(fd.wrap, fd.err, msg, [fd.input]);
+        shown.push(fd.wrap);
+      } else if ((k === 'state' || k === 'lga') && farms[0]) {
+        var a = farms[0].el.querySelector('.area');
+        setError(a, farms[0].el.querySelector('.area-err'), msg);
+        shown.push(a);
+      }
+    });
+    if (shown.length) scrollToEl(shown[0]);
+    return shown.length > 0;
   }
+
+  // Loading state: spinner in the button, form locked, a nudge if the network is slow.
+  var slowTimer = null;
+  function setSaving(on) {
+    submitting = on;
+    submitBtn.disabled = on;
+    form.classList.toggle('is-saving', on);
+    form.querySelectorAll('.step').forEach(function (fs) { fs.disabled = on; });
+    clearTimeout(slowTimer);
+    submitBtn.textContent = '';
+    if (on) {
+      submitBtn.setAttribute('aria-busy', 'true');
+      var sp = document.createElement('span'); sp.className = 'spinner'; sp.setAttribute('aria-hidden', 'true');
+      submitBtn.appendChild(sp);
+    } else submitBtn.removeAttribute('aria-busy');
+    var label = document.createElement('span'); label.className = 'btn-label';
+    label.textContent = on ? COPY.saving.label : COPY.saving.idle;
+    submitBtn.appendChild(label);
+    $('#submit-status').textContent = on ? COPY.saving.label : '';
+    if (on) slowTimer = setTimeout(function () {
+      label.textContent = COPY.saving.slow;
+      $('#submit-status').textContent = COPY.saving.slow;
+    }, 8000);
+  }
+
+  function resetSubmit() { setSaving(false); }
 
   // Next farm: keep who they are, ask again about this farm and for consent.
   $('#another-btn').addEventListener('click', function () {
@@ -1521,6 +1685,7 @@
     submitBtn.setAttribute('aria-disabled', 'true');
     $('#gl_hp_note').value = '';
     $('#submit-err').textContent = '';
+    $('#form-summary').hidden = true;
     form.querySelectorAll('.has-error').forEach(function (el) { el.classList.remove('has-error'); });
     form.querySelectorAll('.error').forEach(function (el) { el.textContent = ''; });
     form.querySelectorAll('[aria-invalid]').forEach(function (el) { el.removeAttribute('aria-invalid'); });

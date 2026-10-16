@@ -1,6 +1,6 @@
 # GrowLine registration data
 
-Everything the Google Sheet stores, plus the request the page sends. Use this to build a backend that replaces or mirrors the Apps Script (`google-apps-script/Code.gs`).
+The request the page sends to the GrowLine API, plus what the old Google Sheet receiver (`google-apps-script/Code.gs`, no longer used by the page) stored.
 
 The page itself stores nothing. Each submission writes **one row to `Registrations`** and **one row per farm to `Farms`**, linked by `registration_id`. The page registers **one farm per form**, so it's one Farms row per Registrations row; the script would accept up to 5. A farmer has no ID: `phone_e164` is what ties several registrations together. An empty cell means null.
 
@@ -70,36 +70,51 @@ The footprint is an **estimate** made from the centre and the size, not a measur
 
 ## What the page sends
 
-`POST` to the endpoint. The body is JSON, but sent as **`Content-Type: text/plain;charset=utf-8`** so the browser skips its CORS preflight check. A backend must parse the body as JSON whatever the content type says, and send `Access-Control-Allow-Origin`.
+`POST https://glowlineapi.up.railway.app/farm/register-form/` with `Content-Type: application/json`. The API answers the CORS preflight for `https://emmanueloluwadamilola.github.io`. Each farm carries **only** its estimated footprint; it is `null` when the farmer has no GPS point.
 
 ```json
 {
-  "full_name": "Bisi Ojo",
-  "phone_e164": "+2348091112222",
-  "state": "Ogun",
-  "lga": "Abeokuta South",
+  "full_name": "Adewumi Gboyega",
+  "phone_e164": "+2348117176443",
+  "state": "Ondo",
+  "lga": "Akure South",
   "lga_source": "gps",
-  "detected_state": "Ogun",
-  "detected_lga": "Abeokuta South",
-  "town_or_village": "Olodo",
+  "detected_state": "Ondo",
+  "detected_lga": "Akure South",
+  "town_or_village": "Apatapiti",
   "crop_stage": "flowering",
   "consent": true,
   "needs_agent_help": false,
   "submitted_at": "2026-10-14T08:53:18.002Z",
   "hp": "",
   "farms": [{
-    "lat": 7.1557, "lng": 3.3451, "gps_accuracy_m": 12,
-    "size_value": 3, "size_unit": "plots",
-    "estimated_area_m2": 1393.5, "estimated_radius_m": 21.1, "estimated_perimeter_m": 132.3,
-    "estimated_footprint": { "type": "Polygon", "coordinates": [[[3.3451, 7.15589], "… 16 more …"]] }
+    "estimated_footprint": { "type": "Polygon", "coordinates": [[[5.1845, 7.21769], "… 16 more …"]] }
   }]
 }
 ```
 
-- **No GPS point:** `lat`, `lng`, `gps_accuracy_m` and `estimated_footprint` are `null`, `needs_agent_help` is `true`, `lga_source` is `chosen`, and `detected_*` are `null`.
-- **Reply:** HTTP 200 with `{"ok": true, "registration_id": "…"}`, or `{"ok": false, "error": "<code>"}`. On any failure the page shows "We could not save your details…".
-- **Error codes:** `bad_json`, `busy`, `save_failed`, `full_name`, `phone_e164`, `state`, `lga`, `lga_source`, `detected_state`, `detected_lga`, `town_or_village`, `crop_stage`, `consent`, `submitted_at`, `farms`, and per farm `farm_N_location`, `farm_N_accuracy`, `farm_N_size`, `farm_N_unit`, `farm_N_footprint`, `farm_N_perimeter`, `farm_N_footprint_points`.
-- **Spam trap:** a non-empty `hp` gets `{"ok": true}` and nothing is saved.
+- **No GPS point:** `estimated_footprint` is `null`, `needs_agent_help` is `true`, `lga_source` is `chosen`, and `detected_*` are `null`.
+- **Footprint:** 17 `[lng, lat]` points (16 around the centre every 22.5°, north first, clockwise, plus the first again), 6 decimals. An estimate from the centre and the typed size, never a measured boundary.
+- **`hp`** is a spam trap; real farmers leave it empty.
+
+### Reply
+
+A saved registration is any HTTP 2xx whose body has an `id`:
+
+```json
+{
+  "id": "c1ff1241-d70e-4430-b646-e8e8118005a8",
+  "code": "FMR-CAXJ",
+  "farmer_created": false,
+  "farms_added": 1,
+  "farms_skipped_as_duplicates": 0,
+  "farms": [{ "id": "73607e76-…", "code": "FM-F4K0", "name": "Farm 1" }]
+}
+```
+
+- The page shows `code` on the thank-you screen as the farmer's GrowLine code.
+- `farms_added` 0 with `farms_skipped_as_duplicates` > 0 shows "This farm was already registered" instead of "We have saved your farm".
+- Any other status or body shows "We could not save your details…" and the farmer can tap the button again.
 
 ## Suggested database layout (Postgres + PostGIS)
 

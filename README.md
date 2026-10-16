@@ -10,7 +10,7 @@ Built by Group 8, AltSchool Africa.
 |---|---|
 | `index.html` | The page: HTML, CSS and vanilla JS, no build step. |
 | `geo/` | State and LGA boundaries (GRID3 2022, CC BY 4.0) used to work out the State and LGA from the farm's GPS point. **Deploy next to `index.html`.** |
-| `google-apps-script/` | `Code.gs` saves registrations to a Google Sheet. `SETUP.md` explains how to deploy it. |
+| `google-apps-script/` | The old Google Sheet receiver (`Code.gs` + `SETUP.md`). No longer used by the page; kept for reference. |
 | `tools/geoprep.py` | Rebuilds `geo/` from geoBoundaries' GRID3 GeoJSON. |
 | `DATA_SCHEMA.md` | Every stored field and its type, the request format, and a suggested Postgres schema. |
 | `PRODUCT.md`, `DESIGN.md` | Product notes and the design system. |
@@ -29,7 +29,7 @@ Then open http://localhost:8790.
 
 At the top of the `<script>` in `index.html`:
 
-- `API_ENDPOINT`: the Apps Script web app URL (`…/exec`). Leave it empty for demo mode, which saves nothing.
+- `API_ENDPOINT`: the GrowLine API register URL (`https://glowlineapi.up.railway.app/farm/register-form/`). Leave it empty for demo mode, which saves nothing.
 - `CONTACT_TEXT` / `CONTACT_HREF`: fill in the `[contact]` placeholder in the FAQ.
 - `PLOT_M2`: the size of one plot (464.5 m², 50 ft × 100 ft), used everywhere.
 

@@ -29,7 +29,7 @@ Spray-timing advice by plain SMS for the farmer's own farm location. No smartpho
 - State and LGA come from the farm's GPS point (all 37 states and 774 LGAs, GRID3 boundaries in geo/, built by tools/geoprep.py). The farmer can correct them with "Not right? Change", and picks them by hand when there's no GPS point. The page now ships as index.html plus the geo/ folder (user decision, 2026-10-14).
 - One farm per registration (user decision, 2026-10-14). A farmer with more farms registers again with the same phone number. The thank-you screen offers "Register another farm" and pre-fills their name, phone, LGA and town.
 - 1 plot = 50 ft × 100 ft = 464.5 m², defined once. Call the area an "estimated footprint", never a "farm boundary".
-- Registrations save to a Google Sheet through an Apps Script web app (google-apps-script/). The FAQ contact details are still a placeholder.
+- Registrations save to the GrowLine API (`POST https://glowlineapi.up.railway.app/farm/register-form/`). The old Apps Script receiver is kept in google-apps-script/ for reference. The FAQ contact details are still a placeholder.
 
 ## Brand Commitments
 
