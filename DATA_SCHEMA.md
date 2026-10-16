@@ -57,7 +57,7 @@ The footprint is an **estimate** made from the centre and the size, not a measur
 - **`state` and `lga`:** all 37 states (including `Federal Capital Territory`) and 774 LGAs, using GRID3 2022 spelling. The full list is in [`geo/names.json`](geo/names.json) as `{ "State": ["LGA", …] }`.
   - Some LGA names appear in more than one state (`Surulere` is in both Lagos and Oyo), so always key an LGA by **(state, lga)**.
   - Rows saved before GPS detection used the old Ogun-only dropdown spelling, e.g. `Egbado North (Yewa North)` = `Yewa North`, `Egbado South (Yewa South)` = `Yewa South`, and `Ado-Odo/Ota` = `Ado Odo/Ota`.
-- **`crop_stage`:** `vegetative` (Growing leaves and stems, no flowers yet), `flowering`, `fruit_set` (Small tomatoes forming), `harvesting`.
+- **`crop_stage`:** `vegetative` (Growing leaves and stems, no flowers yet), `flowering`, `fruiting` (Small tomatoes forming), `harvesting`. The API calls the third one `fruiting`; rows in the old Google Sheet have `fruit_set`.
 - **`size_unit`:** `plots`, `acres`, `hectares`.
 
 ## Reading the sheet
